@@ -4,16 +4,23 @@ import Header from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar';
 import Feed from './components/Feed/Feed';
 import Widgets from './components/Widgets/Widgets';
+import Login from './components/Login/Login';
 
 function App() {
+  const user = null;
   return (
-    <div className="App">
-      <Header />
-      <div className="app__body">
-        <Sidebar />
-        <Feed />
-        <Widgets />
-      </div>
+    <div className="app">
+      {!user ? ( <Login /> ) : (
+        <>
+        <Header />
+        <div className="app__body">
+          <Sidebar />
+          <Feed />
+          <Widgets />
+        </div>
+        </>
+      )}
+      
     </div>
   );
 }
