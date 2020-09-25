@@ -1,12 +1,14 @@
 import { Avatar } from '@material-ui/core';
 import { InsertEmoticon, PhotoLibrary, Videocam } from '@material-ui/icons';
 import React, { useState } from 'react';
+import { useStateValue } from '../../StateProvider';
 import './AddPost.css';
 
 function AddPost() {
 
     const[input, setInput] = useState('');
     const[imageUrl, setImageUrl] = useState('');
+    const [{ user }, dispatch] = useStateValue();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -18,9 +20,9 @@ function AddPost() {
     return (
         <div className="addPost">
             <div className="addPost__top">
-                <Avatar src="https://avatars1.githubusercontent.com/u/49842187?s=460&u=f40259e1e37e9346d757848196904a23dbd664da&v=4" />
+                <Avatar src={user.photoURL} />
                 <form>
-                    <input className="addPost__input" placeholder="What's on your mind"
+                    <input className="addPost__input" placeholder={`What's on your mind, ${user.displayName}`}
                     value={input} 
                     onChange={e => setInput(e.target.value)} />
                     <input placeholder="Image URL(Optional)"
