@@ -1,21 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Feed.css';
 import StoryReel from './StoryReel/StoryReel';
 import AddPost from '../AddPost/AddPost';
 import Post from '../Post/Post';
+import db from '../../firebase';
 
 function Feed() {
+
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        db.collection('posts').onSnapshot(snapshot => {
+            setPosts(snapshot.docs.map(doc=> ({ id: doc.id, data: doc.data()})))
+        })
+    }, []);
     return (
         <div className="feed">
             <StoryReel />
             <AddPost />
-            <Post
-            profilePic="https://avatars1.githubusercontent.com/u/49842187?s=460&u=f40259e1e37e9346d757848196904a23dbd664da&v=4"
-            message="Let's Dance..."
-            timestamp="12:40AM"
-            username="Malik Waqar"
-            image="https://media0.giphy.com/media/1BfQlyaAp4eavGzaYE/giphy.gif"
-            />
+
+            {
+                posts.map(post => (
+                    <Post 
+                    id ={post.data.id}
+                    profilePic = {post.data.profilePic}
+                    message = {post.data.message}
+                    username = {post.data.username}
+                    timestamp = {post.data.timestamp}
+                    image = {post.data.image} />
+                ))
+            }
+
         </div>
     )
 }
