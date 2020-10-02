@@ -20,6 +20,9 @@
 .post__image >img {
     width: 100%;
 }
+.post__bottom {
+    padding: 10px;
+}
 .post__options {
     padding-top: 10px;
     border-top: 1px solid lightgray;

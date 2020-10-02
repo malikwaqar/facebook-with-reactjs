@@ -3,6 +3,8 @@ import { InsertEmoticon, PhotoLibrary, Videocam } from '@material-ui/icons';
 import React, { useState } from 'react';
 import { useStateValue } from '../../StateProvider';
 import './AddPost.css';
+import db from '../../firebase';
+import firebase from 'firebase';
 
 function AddPost() {
 
@@ -12,6 +14,14 @@ function AddPost() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        db.collection('posts').add({
+            message: input,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            profilePic: user.photoURL, 
+            username: user.displayName,
+            image: imageUrl
+        })
 
         setInput('');
         setImageUrl('');
